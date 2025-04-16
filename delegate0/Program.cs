@@ -154,4 +154,9 @@ namespace delegate0
             Console.WriteLine("Сигнализация включена");
         }
     }
+
+    public class VideoPlayer
+    {
+        // Здесь будет реализация
+    }
 }
