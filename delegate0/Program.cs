@@ -154,4 +154,12 @@ namespace delegate0
             Console.WriteLine("Сигнализация включена");
         }
     }
+
+    public class MusicPlayer
+    {
+        public void PlaySong(string song)
+        {
+            Console.WriteLine($"Играет песня: {song}");
+        }
+    }
 }
