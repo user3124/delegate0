@@ -17,6 +17,9 @@ namespace delegate0
             var thermostat = new Thermostat();
             var alarm = new SecurityAlarm();
 
+            var player = new MusicPlayer();
+            smartHome.SubscribeToGoodMorning(light.TurnOn, thermostat.SetTemperature, player.PlaySong);
+
             smartHome.SubscribeToGoodMorning(light.TurnOn, thermostat.SetTemperature);
             user.SendGoodMorningCommand(smartHome);
             smartHome.UnsubscribeToGoodMorning(light.TurnOn, thermostat.SetTemperature);
@@ -66,10 +69,19 @@ namespace delegate0
         public delegate void LightAction(bool on); // Вкл/выкл свет (делегат)
         public delegate void TemperatureAction(float temp); // Изменить температуру
         public delegate void AlarmAction(); // Включить тревогу
+        public delegate void VideoAction(string song);
 
         public LightAction onLightCommand; // Это еще не события, я поля-делегаты
         public TemperatureAction onTempCommand;
         public AlarmAction onAlarmCommand;
+        public VideoAction onVideoCommand;
+
+        public void SubscribeToGoodMorning(LightAction light, TemperatureAction temp, VideoAction video)
+        {
+            onLightCommand += light;
+            onTempCommand += temp;
+            onVideoCommand += video;
+        }
 
         public void SubscribeToGoodMorning(LightAction light, TemperatureAction temp)
         {
@@ -109,6 +121,7 @@ namespace delegate0
         {
             onLightCommand?.Invoke(true);
             onTempCommand?.Invoke(22.0f);
+            onMusicCommand?.Invoke("Видео с котами");
         }
 
         public void ExecuteAwayFromHome()
@@ -157,6 +170,9 @@ namespace delegate0
 
     public class VideoPlayer
     {
-        // Здесь будет реализация
+        public void PlayVideo(string song)
+        {
+            Console.WriteLine($"Играет видео: {song}");
+        }
     }
 }
